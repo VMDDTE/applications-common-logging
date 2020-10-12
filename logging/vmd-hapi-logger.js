@@ -1,10 +1,10 @@
-import { VmdBaseLogger } from './vmd-base-logger'
+import VmdBaseLogger from './vmd-base-logger'
 import cron from 'node-cron'
 import path from 'path'
 import fs from 'fs'
 import simpleNodeLogger from 'simple-node-logger'
 
-export class VmdHapiLogger extends VmdBaseLogger {
+export default class VmdHapiLogger extends VmdBaseLogger {
     constructor (serviceName, config, logDir = 'logs') {
         if (!serviceName) {
             throw new Error('HapiLogger requires a service name')

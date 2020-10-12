@@ -1,6 +1,6 @@
 import { isHealthUrl, isResourceUrl } from '../helpers/url-request'
 
-export class VmdBaseLogger {
+export default class VmdBaseLogger {
     constructor (logger) {
         if (!logger) {
             throw new Error('BaseLogger requires a logger')
