@@ -11,9 +11,7 @@ export default class VmdBaseLogger {
     }
 
     logStandardInfo (correlationId, httpMethod, url, actionMessage, organisationReference, loggedInUserId) {
-        const logMessage = buildBasicLogMessage(correlationId)
-        logMessage.message = actionMessage
-        logMessage.url = buildLoggingUrl(httpMethod, url)
+        const logMessage = buildLogMessage(correlationId, httpMethod, url, actionMessage)
 
         if (organisationReference) {
             logMessage.organisationReference = organisationReference
@@ -23,7 +21,7 @@ export default class VmdBaseLogger {
             logMessage.loggedInUserId = loggedInUserId
         }
 
-        // We want to log health check and resources calls as debug
+        // We want to log health check and resources calls as debug, currently this is hapi format; may need reviewing
         const isHealthCheck = isHealthUrl(url)
         const isResource = isResourceUrl(url)
 
@@ -34,15 +32,22 @@ export default class VmdBaseLogger {
         }
     }
 
-    logStandardError (correlationId, httpMethod, url, actionMessage, statusCode, data, errorMessage) {
-        const logMessage = buildBasicLogMessage(correlationId)
-        logMessage.url = buildLoggingUrl(httpMethod, url)
-        logMessage.message = actionMessage
+    logStandardError (correlationId, httpMethod, url, actionMessage, errorStatusCode, errorData, errorMessage) {
+        const logMessage = buildLogMessage(correlationId, httpMethod, url, actionMessage)
 
-        logMessage.statusCode = statusCode
-        logMessage.data = data
+        logMessage.errorStatusCode = errorStatusCode
+        logMessage.errorData = errorData
+        // Error message is intended to sometime hold additional information
         logMessage.errorMessage = errorMessage
 
         this.logger.error(logMessage)
     }
+}
+
+function buildLogMessage (correlationId, httpMethod, url, actionMessage) {
+    const logMessage = buildBasicLogMessage(correlationId)
+    logMessage.url = buildLoggingUrl(httpMethod, url)
+    logMessage.message = actionMessage
+
+    return logMessage
 }
