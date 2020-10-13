@@ -1,4 +1,5 @@
 import { isHealthUrl, isResourceUrl } from '../helpers/url-request'
+import { buildLoggingUrl, buildBasicLogMessage } from './helper'
 
 export default class VmdBaseLogger {
     constructor (logger) {
@@ -9,10 +10,10 @@ export default class VmdBaseLogger {
         this.logger = logger
     }
 
-    logStandardInfo (correlationId, url, message, organisationReference, loggedInUserId) {
+    logStandardInfo (correlationId, httpMethod, url, actionMessage, organisationReference, loggedInUserId) {
         const logMessage = buildBasicLogMessage(correlationId)
-        logMessage.message = message
-        logMessage.url = url
+        logMessage.message = actionMessage
+        logMessage.url = buildLoggingUrl(httpMethod, url)
 
         if (organisationReference) {
             logMessage.organisationReference = organisationReference
@@ -33,25 +34,15 @@ export default class VmdBaseLogger {
         }
     }
 
-    logStandardError (correlationId, message, statusCode, data, errorMessage) {
+    logStandardError (correlationId, httpMethod, url, actionMessage, statusCode, data, errorMessage) {
         const logMessage = buildBasicLogMessage(correlationId)
-        logMessage.message = message
+        logMessage.url = buildLoggingUrl(httpMethod, url)
+        logMessage.message = actionMessage
+
         logMessage.statusCode = statusCode
         logMessage.data = data
         logMessage.errorMessage = errorMessage
 
         this.logger.error(logMessage)
     }
-}
-
-function buildBasicLogMessage (correlationId) {
-    const logMessage = {}
-    // If a correlation id is provided then define it in the standard way
-    if (correlationId) {
-        logMessage.vmd = {
-            correlationId: correlationId
-        }
-    }
-
-    return logMessage
 }
