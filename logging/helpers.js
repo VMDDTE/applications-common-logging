@@ -3,7 +3,7 @@ import path from 'path'
 import fs from 'fs'
 import simpleNodeLogger from 'simple-node-logger'
 
-export function buildLogger (serviceName, isFileLogging, logDirectory, logLevel) {
+export function buildLogger (serviceName, isFileLogging, logDirectory = 'logs', logLevel = 'info') {
     const nameOffset = serviceName.length + 1
 
     if (isFileLogging) {

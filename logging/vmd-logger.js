@@ -1,5 +1,5 @@
 
-import { buildLogger, buildLogMessage } from './helper'
+import { buildLogger, buildLogMessage } from './helpers'
 
 export default class VmdLogger {
     constructor (serviceName, config, logDirectory = 'logs') {
