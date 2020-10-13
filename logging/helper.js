@@ -78,10 +78,11 @@ function deleteFile (rollingFileLogger, logDirectory, file) {
         })
 }
 
-function buildLogMessage (correlationId, httpMethod, url, actionMessage) {
+function buildLogMessage (correlationId, httpMethod, url, actionMessage, properties) {
     const logMessage = buildBasicLogMessage(correlationId)
     logMessage.url = buildLoggingUrl(httpMethod, url)
     logMessage.message = actionMessage
+    logMessage.properties = properties
 
     return logMessage
 }
