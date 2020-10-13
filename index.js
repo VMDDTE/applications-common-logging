@@ -1,5 +1,1 @@
-import VmdHapiLogger from './logging/vmd-logger'
-
-export {
-    VmdHapiLogger
-}
+export { default as VmdLogger } from './logging/vmd-logger'

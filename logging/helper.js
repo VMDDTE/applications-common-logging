@@ -3,7 +3,7 @@ import path from 'path'
 import fs from 'fs'
 import simpleNodeLogger from 'simple-node-logger'
 
-function buildLogger (serviceName, isFileLogging, logDirectory, logLevel) {
+export function buildLogger (serviceName, isFileLogging, logDirectory, logLevel) {
     const nameOffset = serviceName.length + 1
 
     if (isFileLogging) {
@@ -22,12 +22,12 @@ function buildLogger (serviceName, isFileLogging, logDirectory, logLevel) {
         const rollingFileLogger = simpleNodeLogger.createRollingFileLogger(rollingFileLoggerOptions)
         scheduleLogDeletion(rollingFileLogger, logDirectory, serviceName, nameOffset)
         return rollingFileLogger
-    } else {
-        console.info('Creating console logger')
-        const simpleLogger = simpleNodeLogger.createSimpleLogger()
-        simpleLogger.setLevel(logLevel)
-        return simpleLogger
     }
+
+    console.info('Creating console logger')
+    const simpleLogger = simpleNodeLogger.createSimpleLogger()
+    simpleLogger.setLevel(logLevel)
+    return simpleLogger
 }
 
 function scheduleLogDeletion (rollingFileLogger, logDirectory, service, nameOffset) {
@@ -78,7 +78,7 @@ function deleteFile (rollingFileLogger, logDirectory, file) {
         })
 }
 
-function buildLogMessage (correlationId, httpMethod, url, actionMessage, properties) {
+export function buildLogMessage (correlationId, httpMethod, url, actionMessage, properties) {
     const logMessage = buildBasicLogMessage(correlationId)
     logMessage.url = buildLoggingUrl(httpMethod, url)
     logMessage.message = actionMessage
@@ -101,9 +101,4 @@ function buildBasicLogMessage (correlationId) {
 
 function buildLoggingUrl (httpMethod, url) {
     return `[${httpMethod.toUpperCase()}] ${url}`
-}
-
-export {
-    buildLogger,
-    buildLogMessage
 }

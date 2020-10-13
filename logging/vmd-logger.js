@@ -10,8 +10,6 @@ export default class VmdLogger {
         const isFileLogging = config.requiresFileLogging || false
         const logLevel = config.logLevel || 'info'
         this.logger = buildLogger(serviceName, isFileLogging, logDirectory, logLevel)
-
-        return this.logger
     }
 
     logStandardDebug (correlationId, httpMethod, url, actionMessage, properties) {
