@@ -4,7 +4,7 @@ import { buildLogger, buildLogMessage } from './helpers'
 export default class VmdLogger {
     constructor (serviceName, config, logDirectory = 'logs') {
         if (!serviceName) {
-            throw new Error('HapiLogger requires a service name')
+            throw new Error('VmdLogger requires a service name')
         }
 
         const isFileLogging = config.requiresFileLogging || false
