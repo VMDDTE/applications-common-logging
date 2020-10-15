@@ -74,8 +74,11 @@ describe('Logging Helper', function () {
             expect(logMessage).to.have.property('message')
             expect(logMessage.message).to.equal(actionMessage)
 
+            expect(logMessage).to.have.property('httpVerb')
+            expect(logMessage.httpVerb.toUpperCase()).to.equal('GET')
+
             expect(logMessage).to.have.property('url')
-            expect(logMessage.url).to.equal('[GET] test.url.com')
+            expect(logMessage.url).to.equal('test.url.com')
         })
     })
 })
