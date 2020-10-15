@@ -78,27 +78,19 @@ function deleteFile (rollingFileLogger, logDirectory, file) {
         })
 }
 
-export function buildLogMessage (correlationId, httpMethod, url, actionMessage, properties) {
-    const logMessage = buildBasicLogMessage(correlationId)
-    logMessage.url = buildLoggingUrl(httpMethod, url)
-    logMessage.message = actionMessage
-    logMessage.properties = properties
-
-    return logMessage
-}
-
-function buildBasicLogMessage (correlationId) {
+export function buildLogMessage (correlationId, httpVerb, url, actionMessage, properties) {
     const logMessage = {}
-    // If a correlation id is provided then define it in the standard way
+    // If a correlation id is provided then define it in the standard way, but specify it first
     if (correlationId) {
         logMessage.vmd = {
             correlationId: correlationId
         }
     }
 
-    return logMessage
-}
+    logMessage.httpVerb = httpVerb
+    logMessage.url = url
+    logMessage.message = actionMessage
+    logMessage.properties = properties
 
-function buildLoggingUrl (httpMethod, url) {
-    return `[${httpMethod.toUpperCase()}] ${url}`
+    return logMessage
 }
