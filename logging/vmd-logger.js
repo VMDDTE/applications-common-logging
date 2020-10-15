@@ -1,5 +1,5 @@
 
-import { buildLogger, buildLogMessage } from './helpers'
+import { buildLogger, buildRequestLogMessage, buildLogMessage } from './helpers'
 
 export default class VmdLogger {
     constructor (serviceName, config, logDirectory = 'logs') {
@@ -12,18 +12,33 @@ export default class VmdLogger {
         this.logger = buildLogger(serviceName, isFileLogging, logDirectory, logLevel)
     }
 
-    logStandardDebug (correlationId, httpMethod, url, actionMessage, properties) {
-        const logMessage = buildLogMessage(correlationId, httpMethod, url, actionMessage, properties)
+    logRequestDebug (correlationId, httpMethod, url, actionMessage, properties) {
+        const logMessage = buildRequestLogMessage(correlationId, httpMethod, url, actionMessage, properties)
         this.logger.debug(logMessage)
     }
 
-    logStandardInfo (correlationId, httpMethod, url, actionMessage, properties) {
-        const logMessage = buildLogMessage(correlationId, httpMethod, url, actionMessage, properties)
+    logRequestInfo (correlationId, httpMethod, url, actionMessage, properties) {
+        const logMessage = buildRequestLogMessage(correlationId, httpMethod, url, actionMessage, properties)
         this.logger.info(logMessage)
     }
 
-    logStandardError (correlationId, httpMethod, url, actionMessage, properties) {
-        const logMessage = buildLogMessage(correlationId, httpMethod, url, actionMessage, properties)
+    logRequestError (correlationId, httpMethod, url, actionMessage, properties) {
+        const logMessage = buildRequestLogMessage(correlationId, httpMethod, url, actionMessage, properties)
+        this.logger.error(logMessage)
+    }
+
+    logDebug (message, properties) {
+        const logMessage = buildLogMessage(message, properties)
+        this.logger.debug(logMessage)
+    }
+
+    logInfo (message, properties) {
+        const logMessage = buildLogMessage(message, properties)
+        this.logger.info(logMessage)
+    }
+
+    logError (message, properties) {
+        const logMessage = buildLogMessage(message, properties)
         this.logger.error(logMessage)
     }
 }
