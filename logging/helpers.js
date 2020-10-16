@@ -78,7 +78,7 @@ function deleteFile (rollingFileLogger, logDirectory, file) {
         })
 }
 
-export function buildLogMessage (correlationId, httpVerb, url, actionMessage, properties) {
+export function buildRequestLogMessage (correlationId, httpVerb, url, actionMessage, properties) {
     const logMessage = {}
     // If a correlation id is provided then define it in the standard way, but specify it first
     if (correlationId) {
@@ -93,4 +93,11 @@ export function buildLogMessage (correlationId, httpVerb, url, actionMessage, pr
     logMessage.properties = properties
 
     return logMessage
+}
+
+export function buildLogMessage (message, properties) {
+    return {
+        message,
+        properties
+    }
 }
