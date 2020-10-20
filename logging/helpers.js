@@ -87,7 +87,7 @@ export function buildRequestLogMessage (correlationId, httpVerb, url, actionMess
         }
     }
 
-    logMessage.httpVerb = httpVerb
+    logMessage.httpVerb = httpVerb ? httpVerb.toUpperCase() : null
     logMessage.url = url
     logMessage.message = actionMessage
     logMessage.properties = properties
