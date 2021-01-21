@@ -82,6 +82,7 @@
     "*.{js,ts,json,md}": "prettier --write"
   },
   "jest": {
+    "clearMocks": true,
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.ts"
     ]

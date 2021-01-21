@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call */
 const fs = jest.genMockFromModule<{
   existsSync: jest.Mock;
   mkdirSync: jest.Mock;
@@ -6,7 +7,8 @@ const fs = jest.genMockFromModule<{
 
 fs.existsSync = jest.fn().mockReturnValue(false);
 fs.mkdirSync = jest.fn().mockReturnValue([]);
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
-fs.readdir = jest.fn((_, callback) => callback(null, []));
+fs.readdir = jest.fn((_, callback) =>
+  callback(null, ['testFileLogger-file.log']),
+);
 
 module.exports = fs;

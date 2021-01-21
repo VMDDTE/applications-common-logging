@@ -33,6 +33,14 @@ describe('Logging Helper', () => {
       expect(logger.info).toHaveBeenCalledWith('Begin deletion of old logs');
     });
 
+    it('should not create a directory if it already exists', () => {
+      (fs.existsSync as jest.Mock).mockReturnValueOnce(true);
+
+      buildLogger('testFileLogger', true);
+
+      expect(fs.mkdirSync).not.toHaveBeenCalled();
+    });
+
     // Could add tests to check file creation etc
 
     it('should create console logger', () => {
