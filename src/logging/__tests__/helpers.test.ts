@@ -41,6 +41,12 @@ describe('Logging Helper', () => {
       expect(fs.mkdirSync).not.toHaveBeenCalled();
     });
 
+    it('should log an error if it is unable to read log file', () => {
+      const logger = buildLogger('testFileLogger', true, 'err');
+
+      expect(logger.error).toHaveBeenCalledWith('error reading log files');
+    });
+
     // Could add tests to check file creation etc
 
     it('should create console logger', () => {

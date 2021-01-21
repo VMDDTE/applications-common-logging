@@ -4,6 +4,7 @@ const simpleNodeLogger = jest.genMockFromModule<{
 }>('simple-node-logger');
 
 simpleNodeLogger.createRollingFileLogger = jest.fn(() => ({
+  error: jest.fn(),
   info: jest.fn(),
 }));
 

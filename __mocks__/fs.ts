@@ -7,8 +7,16 @@ const fs = jest.genMockFromModule<{
 
 fs.existsSync = jest.fn().mockReturnValue(false);
 fs.mkdirSync = jest.fn().mockReturnValue([]);
-fs.readdir = jest.fn((_, callback) =>
-  callback(null, ['testFileLogger-file.log']),
-);
+fs.readdir = jest.fn((dirName, callback) => {
+  if (dirName === 'err') {
+    callback('err');
+  } else {
+    callback(null, [
+      'testFileLogger-file.log',
+      'random-file.log',
+      'testFileLogger-2021.01.25.log',
+    ]);
+  }
+});
 
 module.exports = fs;
