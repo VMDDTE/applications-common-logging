@@ -6,7 +6,7 @@ import {
 } from './helpers';
 
 interface ILoggerConfig {
-  logLevel: string;
+  logLevel?: string;
   requiresFileLogging?: boolean;
 }
 
@@ -38,7 +38,7 @@ export default class VmdLogger {
     httpMethod: string,
     url: string,
     actionMessage: string,
-    properties: T,
+    properties?: T,
   ): void {
     const logMessage = buildRequestLogMessage(
       correlationId,
@@ -56,7 +56,7 @@ export default class VmdLogger {
     httpMethod: string,
     url: string,
     actionMessage: string,
-    properties: T,
+    properties?: T,
   ): void {
     const logMessage = buildRequestLogMessage(
       correlationId,
@@ -74,7 +74,7 @@ export default class VmdLogger {
     httpMethod: string,
     url: string,
     actionMessage: string,
-    properties: T,
+    properties?: T,
   ): void {
     const logMessage = buildRequestLogMessage(
       correlationId,
@@ -87,19 +87,19 @@ export default class VmdLogger {
     this.logger.error(logMessage);
   }
 
-  public logDebug<T>(message: string, properties: T): void {
+  public logDebug<T>(message: string, properties?: T): void {
     const logMessage = buildLogMessage(message, properties);
 
     this.logger.debug(logMessage);
   }
 
-  public logInfo<T>(message: string, properties: T): void {
+  public logInfo<T>(message: string, properties?: T): void {
     const logMessage = buildLogMessage(message, properties);
 
     this.logger.info(logMessage);
   }
 
-  public logError<T>(message: string, properties: T): void {
+  public logError<T>(message: string, properties?: T): void {
     const logMessage = buildLogMessage(message, properties);
 
     this.logger.error(logMessage);
