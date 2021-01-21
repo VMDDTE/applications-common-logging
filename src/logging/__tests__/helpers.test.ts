@@ -1,11 +1,15 @@
 import cron from 'node-cron';
 import fs from 'fs';
-import { buildLogger, buildLogMessage } from '../helpers';
+import {
+  buildLogger,
+  buildLogMessage,
+  buildRequestLogMessage,
+} from '../helpers';
 
 jest.mock('fs');
 
 describe('Logging Helper', () => {
-  describe('#buildLogger', () => {
+  describe('buildLogger', () => {
     beforeEach(() => {
       console.info = jest.fn();
     });
@@ -39,14 +43,73 @@ describe('Logging Helper', () => {
     });
   });
 
-  describe('#buildLogMessage', () => {
-    it('should return log message in correct format', () => {
-      const correlationId = '12345';
-      const logMessage = buildLogMessage(correlationId, 'get');
+  describe('buildLogMessage', () => {
+    it('should return log message in correct format when properties are set', () => {
+      const message = 'Hello world';
+      const properties = {
+        isTest: true,
+      };
+      const logMessage = buildLogMessage(message, properties);
 
       expect(logMessage).toEqual({
-        message: correlationId,
-        properties: 'get',
+        message,
+        properties,
+      });
+    });
+
+    it('should return log message in correct format when properties are not set', () => {
+      const message = 'Hello world';
+      const logMessage = buildLogMessage(message);
+
+      expect(logMessage).toEqual({
+        message,
+      });
+    });
+  });
+
+  describe('buildRequestLogMessage', () => {
+    it('should return log message in correct format when a correlation ID is set', () => {
+      const correlationId = '12345';
+      const actionMessage = 'someAction';
+      const httpVerb = 'get';
+      const url = 'test.url.com';
+      const logMessage = buildRequestLogMessage(
+        correlationId,
+        httpVerb,
+        url,
+        actionMessage,
+      );
+
+      expect(logMessage).toEqual({
+        httpVerb: 'GET',
+        message: actionMessage,
+        url,
+        vmd: {
+          correlationId,
+        },
+      });
+    });
+
+    it('should return log message in correct format when a correlation ID is set', () => {
+      const actionMessage = 'someAction';
+      const httpVerb = 'get';
+      const url = 'test.url.com';
+      const properties = {
+        isTest: true,
+      };
+      const logMessage = buildRequestLogMessage(
+        null,
+        httpVerb,
+        url,
+        actionMessage,
+        properties,
+      );
+
+      expect(logMessage).toEqual({
+        httpVerb: 'GET',
+        message: actionMessage,
+        properties,
+        url,
       });
     });
   });

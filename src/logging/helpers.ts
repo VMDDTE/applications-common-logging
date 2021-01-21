@@ -117,7 +117,7 @@ export function buildLogger(
 interface IRequestLogMessage<T> {
   httpVerb: string | null;
   message: string;
-  properties: T;
+  properties?: T;
   vmd?: {
     correlationId: string;
   };
@@ -125,16 +125,15 @@ interface IRequestLogMessage<T> {
 }
 
 export function buildRequestLogMessage<T>(
-  correlationId: string,
-  httpVerb: string,
+  correlationId: string | null,
+  httpVerb: string | null,
   url: string,
   actionMessage: string,
-  properties: T,
+  properties?: T,
 ): IRequestLogMessage<T> {
   const logMessage: IRequestLogMessage<T> = {
     httpVerb: httpVerb ? httpVerb.toUpperCase() : null,
     message: actionMessage,
-    properties,
     url,
   };
 
@@ -144,17 +143,21 @@ export function buildRequestLogMessage<T>(
     };
   }
 
+  if (properties) {
+    logMessage.properties = properties;
+  }
+
   return logMessage;
 }
 
 interface ILogMessage<T> {
   message: string;
-  properties: T;
+  properties?: T;
 }
 
 export function buildLogMessage<T>(
   message: string,
-  properties: T,
+  properties?: T,
 ): ILogMessage<T> {
   return {
     message,
