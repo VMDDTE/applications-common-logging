@@ -27,6 +27,12 @@ describe('VMD logged', () => {
     properties = ['Testing', '123'];
   });
 
+  it('should throw an error if service name is not set', () => {
+    expect(() => {
+      logger = new Logger('', {});
+    }).toThrowError('VmdLogger requires a service name');
+  });
+
   it('should build the logger', () => {
     expect(helpers.buildLogger).toHaveBeenCalledWith(
       'Unit test',
