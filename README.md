@@ -1,3 +1,6 @@
+[![Build Status](https://jenkins.vmduk.net/buildStatus/icon?job=NPM+libraries%2FApplicationCommonLogging.OnMerge)](https://jenkins.vmduk.net/job/NPM%20libraries/job/ApplicationCommonLogging.OnMerge/)
+[![Quality Gate Status](https://sonarqube.vmduk.net/api/project_badges/measure?project=VMDDTE_applications-common-logging&metric=alert_status)](https://sonarqube.vmduk.net/dashboard?id=VMDDTE_applications-common-logging)
+
 # applications-common-logging
 
 VMD logging library for JavaScript applications
