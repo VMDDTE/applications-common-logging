@@ -1,6 +1,7 @@
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
+import json from '@rollup/plugin-json';
 import external from 'rollup-plugin-peer-deps-external';
 import pkg from './package.json';
 
@@ -24,13 +25,14 @@ export default [
       },
     ],
     plugins: [
+      json(),
       external(),
       babel({
         babelHelpers: 'bundled',
         extensions: ['.js', '.ts'],
       }),
       resolve({
-        extensions: ['.ts'],
+        extensions: ['.json', '.ts'],
       }),
       commonjs(),
     ],
