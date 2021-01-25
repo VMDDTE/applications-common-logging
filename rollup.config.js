@@ -1,16 +1,11 @@
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
-import json from '@rollup/plugin-json';
-import external from 'rollup-plugin-peer-deps-external';
+import external from 'rollup-plugin-exclude-dependencies-from-bundle';
 import pkg from './package.json';
 
 export default [
   {
-    external: {
-      ...pkg.peerDependencies,
-      ...pkg.dependencies,
-    },
     input: 'src/index.ts',
     output: [
       {
@@ -25,7 +20,6 @@ export default [
       },
     ],
     plugins: [
-      json(),
       external(),
       babel({
         babelHelpers: 'bundled',
