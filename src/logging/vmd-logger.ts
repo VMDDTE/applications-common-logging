@@ -69,6 +69,24 @@ export default class VmdLogger {
     this.logger.info(logMessage);
   }
 
+  public logRequestWarn<T>(
+    correlationId: string,
+    httpMethod: string,
+    url: string,
+    actionMessage: string,
+    properties?: T,
+  ): void {
+    const logMessage = buildRequestLogMessage(
+      correlationId,
+      httpMethod,
+      url,
+      actionMessage,
+      properties,
+    );
+
+    this.logger.warn(logMessage);
+  }
+
   public logRequestError<T>(
     correlationId: string,
     httpMethod: string,
@@ -97,6 +115,12 @@ export default class VmdLogger {
     const logMessage = buildLogMessage(message, properties);
 
     this.logger.info(logMessage);
+  }
+
+  public logWarn<T>(message: string, properties?: T): void {
+    const logMessage = buildLogMessage(message, properties);
+
+    this.logger.warn(logMessage);
   }
 
   public logError<T>(message: string, properties?: T): void {

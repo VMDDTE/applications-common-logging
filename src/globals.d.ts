@@ -12,6 +12,7 @@ declare module 'simple-node-logger' {
     error: (...message: unknown[]) => void;
     info: (...message: unknown[]) => void;
     setLevel: (level: string) => void;
+    warn: (...message: unknown[]) => void;
   }
 
   function createRollingFileLogger(

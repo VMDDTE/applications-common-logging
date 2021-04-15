@@ -8,6 +8,7 @@ jest.spyOn(helpers, 'buildLogger').mockReturnValue({
   error: jest.fn(),
   info: jest.fn(),
   setLevel: jest.fn(),
+  warn: jest.fn(),
 });
 
 describe('VMD logged', () => {
@@ -78,6 +79,24 @@ describe('VMD logged', () => {
     );
   });
 
+  it('should create an warn log when logRequestWarn is called', () => {
+    logger.logRequestWarn(
+      correlationId,
+      httpMethod,
+      url,
+      actionMessage,
+      properties,
+    );
+
+    expect(helpers.buildRequestLogMessage).toHaveBeenCalledWith(
+      correlationId,
+      httpMethod,
+      url,
+      actionMessage,
+      properties,
+    );
+  });
+
   it('should create an error log when logRequestError is called', () => {
     logger.logRequestError(
       correlationId,
@@ -107,6 +126,15 @@ describe('VMD logged', () => {
 
   it('should create an info log when logInfo is called', () => {
     logger.logInfo(actionMessage, properties);
+
+    expect(helpers.buildLogMessage).toHaveBeenCalledWith(
+      actionMessage,
+      properties,
+    );
+  });
+
+  it('should create an info warn when logWarn is called', () => {
+    logger.logWarn(actionMessage, properties);
 
     expect(helpers.buildLogMessage).toHaveBeenCalledWith(
       actionMessage,
