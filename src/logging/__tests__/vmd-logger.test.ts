@@ -79,7 +79,7 @@ describe('VMD logged', () => {
     );
   });
 
-  it('should create an warn log when logRequestWarn is called', () => {
+  it('should create a warn log when logRequestWarn is called', () => {
     logger.logRequestWarn(
       correlationId,
       httpMethod,
@@ -133,7 +133,7 @@ describe('VMD logged', () => {
     );
   });
 
-  it('should create an info warn when logWarn is called', () => {
+  it('should create a warn log when logWarn is called', () => {
     logger.logWarn(actionMessage, properties);
 
     expect(helpers.buildLogMessage).toHaveBeenCalledWith(
