@@ -40,7 +40,7 @@ pipeline {
       steps {
         dir("$WORKSPACE/jenkins-jobs") {
           git(
-            branch: 'develop',
+            branch: 'master',
             credentialsId: 'VMDIT_Github_Credentials',
             url: 'https://github.com/VMDDTE/jenkins-jobs.git'
           )
